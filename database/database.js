@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
-const dbPath = process.env.NODE_ENV === 'test' ? ':memory:' : path.join(__dirname, 'shopping_assistant.db');
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'shopping_assistant.db');
 let db;
 
 const initDatabase = () => {

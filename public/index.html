@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Command Shopping Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    Voice Shopping Assistant
+                </h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="languageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLanguage">EN</span>
+                    </button>
+                    <button class="btn btn-secondary" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Voice Command Section -->
+            <section class="voice-section">
+                <div class="voice-container">
+                    <div class="voice-controls">
+                        <div class="continuous-toggle">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="continuousToggle">
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-text">Continuous Listening</span>
+                            </label>
+                        </div>
+                        
+                        <div class="voice-status" id="voiceStatus">
+                            <div class="status-indicator" id="statusIndicator">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <p class="status-text" id="statusText">Tap to start voice command</p>
+                        </div>
+                        
+                        <button class="voice-button" id="voiceButton">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Interim result display -->
+                    <div class="interim-result" id="interimResult" style="display: none;">
+                        <i class="fas fa-volume-up"></i>
+                        <span class="interim-text"></span>
+                    </div>
+                    
+                    <div class="voice-feedback" id="voiceFeedback">
+                        <p class="feedback-text" id="feedbackText"></p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <button class="action-btn" data-action="add-item">
+                        <i class="fas fa-plus"></i>
+                        Add Item
+                    </button>
+                    <button class="action-btn" data-action="show-list">
+                        <i class="fas fa-list"></i>
+                        Show List
+                    </button>
+                    <button class="action-btn" data-action="search">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                    <button class="action-btn" data-action="suggestions">
+                        <i class="fas fa-lightbulb"></i>
+                        Suggestions
+                    </button>
+                </div>
+            </section>
+
+            <!-- Shopping List -->
+            <section class="shopping-list-section">
+                <div class="section-header">
+                    <h3>Shopping List</h3>
+                    <div class="list-actions">
+                        <button class="btn btn-small" id="newListBtn">
+                            <i class="fas fa-plus"></i>
+                            New List
+                        </button>
+                        <button class="btn btn-small" id="clearCompletedBtn">
+                            <i class="fas fa-trash"></i>
+                            Clear Completed
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="list-container">
+                    <div class="list-filters">
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="dairy">Dairy</option>
+                            <option value="produce">Produce</option>
+                            <option value="meat">Meat</option>
+                            <option value="bakery">Bakery</option>
+                            <option value="pantry">Pantry</option>
+                            <option value="frozen">Frozen</option>
+                            <option value="beverages">Beverages</option>
+                            <option value="snacks">Snacks</option>
+                            <option value="household">Household</option>
+                            <option value="personal care">Personal Care</option>
+                        </select>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search items...">
+                    </div>
+                    
+                    <div class="items-container" id="itemsContainer">
+                        <!-- Items will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Smart Suggestions -->
+            <section class="suggestions-section">
+                <div class="section-header">
+                    <h3>Smart Suggestions</h3>
+                    <button class="btn btn-small" id="refreshSuggestionsBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+                
+                <div class="suggestions-container">
+                    <div class="suggestion-tabs">
+                        <button class="tab-btn active" data-tab="frequent">Frequent</button>
+                        <button class="tab-btn" data-tab="seasonal">Seasonal</button>
+                        <button class="tab-btn" data-tab="substitutes">Substitutes</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="frequentTab">
+                        <div class="suggestions-list" id="frequentSuggestions">
+                            <!-- Frequent suggestions will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="seasonalTab">
+                        <div class="suggestions-list" id="seasonalSuggestions">
+                            <!-- Seasonal suggestions will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="substitutesTab">
+                        <div class="suggestions-list" id="substitutesSuggestions">
+                            <!-- Substitute suggestions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Modals -->
+        <div class="modal" id="addItemModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add Item</h3>
+                    <button class="modal-close" id="closeAddItemModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="addItemForm">
+                        <div class="form-group">
+                            <label for="itemName">Item Name</label>
+                            <input type="text" id="itemName" name="itemName" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="itemQuantity">Quantity</label>
+                                <input type="number" id="itemQuantity" name="itemQuantity" min="1" value="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="itemUnit">Unit</label>
+                                <input type="text" id="itemUnit" name="itemUnit" placeholder="e.g., kg, pcs">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemCategory">Category</label>
+                            <select id="itemCategory" name="itemCategory">
+                                <option value="">Select Category</option>
+                                <option value="dairy">Dairy</option>
+                                <option value="produce">Produce</option>
+                                <option value="meat">Meat</option>
+                                <option value="bakery">Bakery</option>
+                                <option value="pantry">Pantry</option>
+                                <option value="frozen">Frozen</option>
+                                <option value="beverages">Beverages</option>
+                                <option value="snacks">Snacks</option>
+                                <option value="household">Household</option>
+                                <option value="personal care">Personal Care</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="itemPrice">Price</label>
+                                <input type="number" id="itemPrice" name="itemPrice" step="0.01" placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label for="itemBrand">Brand</label>
+                                <input type="text" id="itemBrand" name="itemBrand">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemNotes">Notes</label>
+                            <textarea id="itemNotes" name="itemNotes" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelAddItem">Cancel</button>
+                    <button class="btn btn-primary" id="saveAddItem">Add Item</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Language Selection Modal -->
+        <div class="modal" id="languageModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Select Language</h3>
+                    <button class="modal-close" id="closeLanguageModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="language-grid" id="languageGrid">
+                        <!-- Languages will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="modal" id="settingsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Settings</h3>
+                    <button class="modal-close" id="closeSettingsModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="settings-section">
+                        <h4>Voice Recognition</h4>
+                        <div class="setting-item">
+                            <label for="voiceSpeed">Voice Speed</label>
+                            <select id="voiceSpeed">
+                                <option value="0.8">Slow</option>
+                                <option value="1.0" selected>Normal</option>
+                                <option value="1.2">Fast</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="voiceVolume">Voice Volume</label>
+                            <input type="range" id="voiceVolume" min="0" max="1" step="0.1" value="0.8">
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h4>Notifications</h4>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="enableNotifications" checked>
+                                Enable notifications
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="enableSound" checked>
+                                Enable sound effects
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelSettings">Cancel</button>
+                    <button class="btn btn-primary" id="saveSettings">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

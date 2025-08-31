@@ -8,12 +8,12 @@ let db;
 const initDatabase = () => {
   return new Promise((resolve, reject) => {
     // Create database directory if it doesn't exist
-    const dbDir = path.dirname(dbPath);
+    const dbDir = path.dirname(DB_PATH);
     if (!fs.existsSync(dbDir)) {
       fs.mkdirSync(dbDir, { recursive: true });
     }
 
-    db = new sqlite3.Database(dbPath, (err) => {
+    db = new sqlite3.Database(DB_PATH, (err) => {
       if (err) {
         console.error('Error opening database:', err.message);
         reject(err);
